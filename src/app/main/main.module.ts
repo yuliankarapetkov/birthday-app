@@ -3,11 +3,18 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
+import { MainRoutingModule } from './main-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
-        CommonModule
+        RouterModule,
+        MainRoutingModule
     ],
-    declarations: [LoginComponent, RegisterComponent, HomeComponent]
+    declarations: [
+        LoginComponent,
+        RegisterComponent,
+        HomeComponent
+    ]
 })
 export class MainModule { }
