@@ -9,6 +9,8 @@ import { AuthService } from '../shared/services/auth/auth.service';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+    loginError: string;
+
     constructor(
         private router: Router,
         private authService: AuthService
@@ -22,7 +24,7 @@ export class LoginComponent implements OnInit {
             await this.authService.loginUser(email, password);
             this.router.navigate(['/']);
         } catch (error) {
-            // this.error = error;
+            this.loginError = error;
         }
     }
 

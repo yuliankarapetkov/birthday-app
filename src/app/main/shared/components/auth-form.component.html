@@ -8,6 +8,7 @@
                 <mat-card-content>
 
                         <mat-form-field>
+
                             <input
                                 matInput
                                 type="email"
@@ -20,19 +21,28 @@
                             <mat-error *ngIf="emailRequiredError">
                                 Email is required
                             </mat-error>
+
                         </mat-form-field>
 
                         <mat-form-field>
+
                             <input
                                 matInput
                                 type="password"
                                 formControlName="password"
                                 placeholder="Password">
 
+                            <mat-error *ngIf="passwordMinLengthError">
+                                Password has to be at least 6 characters long
+                            </mat-error>
                             <mat-error *ngIf="passwordRequiredError">
                                 Password is required
                             </mat-error>
+
                         </mat-form-field>
+
+                        <ng-content select="mat-error"></ng-content>
+
                 </mat-card-content>
 
                 <ng-content select="mat-card-actions"></ng-content>

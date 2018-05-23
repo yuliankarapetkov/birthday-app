@@ -1,5 +1,6 @@
 <div class="main-register">
     <main-auth-form (formSubmit)="handleFormSubmit($event)">
+
         <mat-card-header>
             <mat-card-title>
                 Create your Birthday App Account
@@ -13,5 +14,10 @@
             <a mat-button color="primary" routerLink="/login">Sign in instead</a>
             <button mat-raised-button color="primary">Create Account</button>
         </mat-card-actions>
+
+        <mat-error *ngIf="registerError">
+            {{ registerError }}
+        </mat-error>
+
     </main-auth-form>
 </div>

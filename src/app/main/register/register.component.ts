@@ -9,6 +9,8 @@ import { AuthService } from '../shared/services/auth/auth.service';
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+    registerError: string;
+
     constructor(
         private router: Router,
         private authService: AuthService
@@ -22,7 +24,7 @@ export class RegisterComponent implements OnInit {
             await this.authService.createUser(email, password);
             this.router.navigate(['/']);
         } catch (error) {
-            // this.error = error;
+            this.registerError = error;
         }
     }
 
