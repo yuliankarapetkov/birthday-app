@@ -6,9 +6,11 @@ import { MainRoutingModule } from './main-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { MatButtonModule, MatCardModule, MatIconModule, MatInputModule } from '@angular/material';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     imports: [
+        CommonModule,
         RouterModule,
         MainRoutingModule,
         SharedModule,

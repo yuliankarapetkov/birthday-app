@@ -11,7 +11,7 @@ export class AuthFormComponent implements OnInit {
 
     authForm = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required]
+        password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
     constructor(
@@ -25,6 +25,10 @@ export class AuthFormComponent implements OnInit {
 
     get passwordRequiredError() {
         return this.hasError('password', 'required');
+    }
+
+    get passwordMinLengthError() {
+        return this.hasError('password', 'minlength');
     }
 
     get emailRequiredError() {

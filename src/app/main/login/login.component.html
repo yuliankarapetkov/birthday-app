@@ -1,5 +1,6 @@
 <div class="main-login">
     <main-auth-form (formSubmit)="handleFormSubmit($event)">
+
         <mat-card-header>
             <mat-card-title>
                 Sign in
@@ -13,5 +14,10 @@
             <a mat-button color="primary" routerLink="/register">Create account</a>
             <button mat-raised-button color="primary">Sign in</button>
         </mat-card-actions>
+
+        <mat-error *ngIf="loginError">
+            {{ loginError }}
+        </mat-error>
+
     </main-auth-form>
 </div>
