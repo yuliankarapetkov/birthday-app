@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../shared/services/auth/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'main-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+    constructor(
+        private router: Router,
+        private authService: AuthService
+    ) { }
 
-  constructor() { }
+    ngOnInit() {
+    }
 
-  ngOnInit() {
-  }
+    private async registerUser(email: string, password: string) {
+        try {
+            await this.authService.loginUser(email, password);
+            this.router.navigate(['/']);
+        } catch (error) {
+            // this.error = error;
+        }
+    }
 
+    handleFormSubmit(formValue: any) {
+        const { email, password } = formValue;
+        this.registerUser(email, password);
+    }
 }

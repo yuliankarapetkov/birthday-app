@@ -1,3 +1,17 @@
-<p>
-  register works!
-</p>
+<div class="main-register">
+    <main-auth-form (formSubmit)="handleFormSubmit($event)">
+        <mat-card-header>
+            <mat-card-title>
+                Create your Birthday App Account
+            </mat-card-title>
+            <mat-card-subtitle>
+                to continue to Birthday App
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-actions align="end">
+            <a mat-button color="primary" routerLink="/login">Sign in instead</a>
+            <button mat-raised-button color="primary">Create Account</button>
+        </mat-card-actions>
+    </main-auth-form>
+</div>
