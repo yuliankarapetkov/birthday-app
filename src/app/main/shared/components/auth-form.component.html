@@ -1,0 +1,43 @@
+<div class="auth-form">
+    <div class="auth-form__form">
+        <form [formGroup]="authForm" (submit)="submitForm()">
+            <mat-card>
+
+                <ng-content select="mat-card-header"></ng-content>
+
+                <mat-card-content>
+
+                        <mat-form-field>
+                            <input
+                                matInput
+                                type="email"
+                                formControlName="email"
+                                placeholder="Email">
+
+                            <mat-error *ngIf="emailFormatError">
+                                Please enter a valid email address, e.g. johndoe@example.com
+                            </mat-error>
+                            <mat-error *ngIf="emailRequiredError">
+                                Email is required
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input
+                                matInput
+                                type="password"
+                                formControlName="password"
+                                placeholder="Password">
+
+                            <mat-error *ngIf="passwordRequiredError">
+                                Password is required
+                            </mat-error>
+                        </mat-form-field>
+                </mat-card-content>
+
+                <ng-content select="mat-card-actions"></ng-content>
+
+            </mat-card>
+        </form>
+    </div>
+</div>

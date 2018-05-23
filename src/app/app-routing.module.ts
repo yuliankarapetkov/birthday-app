@@ -9,6 +9,10 @@ export const ROUTES: Routes = [
     {
         path: 'friends',
         loadChildren: './friends/friends.module#FriendsModule'
+    },
+    {
+        path: '**',
+        redirectTo: '/login'
     }
 ];
 
