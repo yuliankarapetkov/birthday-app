@@ -13,21 +13,6 @@ export const ROUTES: Routes = [
         path: 'new',
         component: FriendComponent
     }
-        // children: [
-        //     {
-        //         path: '',
-        //         pathMatch: 'full',
-        //         component: FriendsComponent
-        //     },
-        //     // {
-        //     //     path: 'login',
-        //     //     component: LoginComponent
-        //     // },
-        //     // {
-        //     //     path: 'register',
-        //     //     component: RegisterComponent
-        //     // }
-        // ]
 ];
 
 @NgModule({
