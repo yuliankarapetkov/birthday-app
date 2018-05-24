@@ -1,0 +1,16 @@
+.friend {
+    &__form {
+        max-width: 600px;
+        width: 100%;
+        margin: 120px auto 0;
+
+        .mat-card {
+            padding: 50px 40px;
+        }
+
+        .mat-form-field {
+            width: 100%;
+            padding-bottom: 20px;
+        }
+    }
+}

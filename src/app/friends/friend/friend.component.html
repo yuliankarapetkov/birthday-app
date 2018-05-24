@@ -1,0 +1,52 @@
+<div class="friend">
+    <div class="friend__form">
+        <form [formGroup]="friendForm" (submit)="submitForm()">
+            <mat-card>
+
+                <mat-card-header>
+
+                    <mat-card-title>
+                        Add your friend
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        to save their birthday
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <mat-form-field>
+
+                        <input
+                            matInput
+                            type="text"
+                            formControlName="name"
+                            placeholder="Your friend's name">
+
+                        <!--<mat-error *ngIf="emailFormatError">-->
+                            <!--Enter a valid email address, e.g. johndoe@example.com-->
+                        <!--</mat-error>-->
+                        <!--<mat-error *ngIf="emailRequiredError">-->
+                            <!--Enter an email-->
+                        <!--</mat-error>-->
+
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput formControlName="birthday" [matDatepicker]="picker" placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                </mat-card-content>
+
+                <mat-card-actions>
+                    <button mat-raised-button color="primary">Add Friend</button>
+                    <a routerLink="../" mat-button color="primary">Cancel</a>
+                </mat-card-actions>
+
+            </mat-card>
+        </form>
+    </div>
+</div>

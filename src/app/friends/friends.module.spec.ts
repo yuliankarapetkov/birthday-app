@@ -1,13 +1,13 @@
 import { FriendsModule } from './friends.module';
 
 describe('FriendsModule', () => {
-  let friendsModule: FriendsModule;
+  let birthdayModule: FriendsModule;
 
   beforeEach(() => {
-    friendsModule = new FriendsModule();
+    birthdayModule = new FriendsModule();
   });
 
   it('should create an instance', () => {
-    expect(friendsModule).toBeTruthy();
+    expect(birthdayModule).toBeTruthy();
   });
 });
