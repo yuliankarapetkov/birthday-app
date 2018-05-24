@@ -1,3 +1,21 @@
 <div class="app">
-    <router-outlet></router-outlet>
+
+    <mat-sidenav-container (backdropClick)="sidenav.close()">
+
+        <mat-sidenav #sidenav mode="side">
+            Sidenav
+        </mat-sidenav>
+
+        <mat-toolbar color="primary">
+            <button mat-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <button mat-button>friends</button>
+            <button mat-button>add</button>
+        </mat-toolbar>
+
+        <router-outlet></router-outlet>
+
+    </mat-sidenav-container>
+
 </div>
