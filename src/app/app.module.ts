@@ -13,6 +13,7 @@ import { Store } from '../store';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { MatButton, MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyAhOOX-f85OhK-ue-y4Tal7DsqLs2dTcSM',
@@ -38,7 +39,12 @@ const firebaseConfig = {
         AngularFireDatabaseModule,
         // Custom
         AppRoutingModule,
-        SharedModule
+        SharedModule,
+        // Mat
+        MatSidenavModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule
     ],
     providers: [
         Store
