@@ -1,13 +1,16 @@
 import { Observable, BehaviorSubject } from 'rxjs/index';
 import { pluck, distinctUntilChanged } from 'rxjs/operators';
+import { Friend } from './app/friends/shared/services/friends/friends.service';
 
 export interface State {
     user: any;
+    friends: Friend[];
     [key: string]: any;
 }
 
 const state: State = {
-    user: undefined
+    user: undefined,
+    friends: undefined
 };
 
 export class Store {
