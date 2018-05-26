@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import {
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -15,7 +16,8 @@ import {
         MatButtonModule,
         MatIconModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatBadgeModule
     ],
     exports: [
         MatCardModule,
@@ -23,7 +25,8 @@ import {
         MatButtonModule,
         MatIconModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatBadgeModule
     ],
     declarations: []
 })

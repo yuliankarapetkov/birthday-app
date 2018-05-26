@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { FriendsService } from '../shared/services/friends/friends.service';
 
 @Component({
     selector: 'friends-friend',
@@ -13,15 +14,16 @@ export class FriendComponent implements OnInit {
     });
 
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private friendsService: FriendsService
     ) { }
 
-    submitForm() {
+    async submitForm() {
         console.log('ye', this.friendForm.value);
 
-        // if (this.friendForm.valid) {
-        //
-        // }
+        if (this.friendForm.valid) {
+            await this.friendsService.addFriend(this.friendForm.value);
+        }
     }
 
     ngOnInit() {

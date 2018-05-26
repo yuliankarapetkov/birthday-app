@@ -3,8 +3,9 @@ import { tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import { MainSharedModule } from '../../shared.module';
-import { Store } from '../../../../../store';
+import { MainSharedModule } from '../../../main/shared/shared.module';
+import { Store } from '../../../../store';
+import { SharedModule } from '../../shared.module';
 
 export interface  User {
     email: string;
@@ -13,7 +14,7 @@ export interface  User {
 }
 
 @Injectable({
-  providedIn: MainSharedModule
+  providedIn: SharedModule
 })
 export class AuthService {
     auth$ = this.angularFire.authState
