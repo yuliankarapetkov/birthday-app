@@ -1,40 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService, User } from './shared/services/auth/auth.service';
-import { Observable } from 'rxjs/index';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '../store';
-import { takeWhile } from 'rxjs/internal/operators';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from './store';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
-    private componentAlive = true;
-
-    user$: Observable<User>;
-
+export class AppComponent implements OnInit {
     constructor(
-        private router: Router,
-        private store: Store,
-        private authService: AuthService
+        private store: Store<fromStore.State>,
+        private router: Router
     ) {}
 
-    // async handleOnLogout() {
-    //     await this.authService.logoutUser();
-    //     this.router.navigate(['/login']);
-    // }
 
     ngOnInit() {
-        this.authService.auth$
-            .pipe(takeWhile(() => this.componentAlive))
-            .subscribe();
-
-        this.user$ = this.store.select<User>('user');
-    }
-
-    ngOnDestroy() {
-        this.componentAlive = false;
+        this.store.dispatch(new fromStore.CheckAuthState());
     }
 }

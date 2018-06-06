@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../shared/services/auth/auth.service';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../../store';
 
 @Component({
     selector: 'main-register',
@@ -12,20 +14,15 @@ export class RegisterComponent implements OnInit {
     registerError: string;
 
     constructor(
-        private router: Router,
-        private authService: AuthService
+        private store: Store<fromStore.State>,
+        private router: Router
     ) { }
 
     ngOnInit() {
     }
 
-    private async registerUser(email: string, password: string) {
-        try {
-            await this.authService.createUser(email, password);
-            this.router.navigate(['/']);
-        } catch (error) {
-            this.registerError = error;
-        }
+    private registerUser(email: string, password: string) {
+        this.store.dispatch(new fromStore.CreateUser({ email, password }));
     }
 
     handleFormSubmit(formValue: any) {
