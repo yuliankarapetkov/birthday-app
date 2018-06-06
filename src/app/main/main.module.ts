@@ -5,7 +5,6 @@ import { MainSharedModule } from './shared/shared.module';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
     imports: [
@@ -14,8 +13,7 @@ import { HomeComponent } from './home/home.component';
     ],
     declarations: [
         LoginComponent,
-        RegisterComponent,
-        HomeComponent
+        RegisterComponent
     ]
 })
 export class MainModule { }
