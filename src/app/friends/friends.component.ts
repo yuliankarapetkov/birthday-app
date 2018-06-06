@@ -6,6 +6,10 @@ import { Observable } from 'rxjs/index';
 
 import { DateService } from '../shared/services/date/date.service';
 
+import * as ngrx from '@ngrx/store';
+import { BirthdayState } from './store/reducers';
+import * as fromStore from './store';
+
 @Component({
     selector: 'friends-root',
     templateUrl: './friends.component.html',
@@ -16,10 +20,13 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
     friends$: Observable<Friend[]>;
 
+    ngrxFriends$: Observable<any>;
+
     constructor(
         private store: Store,
         private friendsService: FriendsService,
-        private dateService: DateService
+        private dateService: DateService,
+        private ngrxStore: ngrx.Store<BirthdayState>,
     ) { }
 
     getNextBirthday(birthdayTimestamp: number) {
@@ -38,6 +45,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.ngrxFriends$ = this.ngrxStore.select(fromStore.getFriends);
+        this.ngrxStore.dispatch(new fromStore.LoadFriends());
+
         this.friends$ = this.store.select<Friend[]>('friends');
         this.friendsService.friends$
             .pipe(takeWhile(() => this.componentAlive))
