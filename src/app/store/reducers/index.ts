@@ -3,6 +3,8 @@ import { ActivatedRouteSnapshot, Params, RouterState, RouterStateSnapshot } from
 import * as fromRouter from '@ngrx/router-store';
 import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
+import * as fromAuth from './auth.reducer';
+
 export interface RouterStateUrl {
     url: string;
     queryParams: Params;
@@ -11,10 +13,12 @@ export interface RouterStateUrl {
 
 export interface State {
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+    auth: fromAuth.AuthState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-    routerReducer: fromRouter.routerReducer
+    routerReducer: fromRouter.routerReducer,
+    auth: fromAuth.reducer
 };
 
 export const getRouterState =  createFeatureSelector<fromRouter.RouterReducerState<RouterStateUrl>>('routerReducer');

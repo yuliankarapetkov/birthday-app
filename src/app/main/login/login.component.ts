@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../shared/services/auth/auth.service';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../../store';
 
 @Component({
     selector: 'main-login',
@@ -12,20 +14,15 @@ export class LoginComponent implements OnInit {
     loginError: string;
 
     constructor(
-        private router: Router,
-        private authService: AuthService
+        private store: Store<fromStore.State>,
+        private router: Router
     ) { }
 
     ngOnInit() {
     }
 
-    private async registerUser(email: string, password: string) {
-        try {
-            await this.authService.loginUser(email, password);
-            this.router.navigate(['/']);
-        } catch (error) {
-            this.loginError = error;
-        }
+    private registerUser(email: string, password: string) {
+        this.store.dispatch(new fromStore.LoginUser({ email, password }));
     }
 
     handleFormSubmit(formValue: any) {
