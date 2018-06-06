@@ -39,12 +39,7 @@ const firebaseConfig = {
         AngularFireDatabaseModule,
         // Custom
         AppRoutingModule,
-        SharedModule,
-        // Mat
-        MatSidenavModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule
+        SharedModule
     ],
     providers: [
         Store
