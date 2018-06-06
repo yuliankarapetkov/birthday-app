@@ -26,4 +26,19 @@ export class FriendsEffect {
                     catchError(error => of(new friendsAction.LoadFriendsFail(error)))
                 );
         }));
+
+    @Effect()
+    createFriend$ = this.actions$
+        .ofType(friendsAction.CREATE_FRIEND)
+        .pipe(
+            map((action: friendsAction.CreateFriend) => action.payload),
+            switchMap((friend: any) => {
+                return this.friendsService
+                    .addFriend(friend)
+                    .pipe(
+                        map(() => new friendsAction.CreateFriendSuccess()),
+                        catchError(error => of(new friendsAction.CreateFriendFail(error)))
+                    );
+            })
+        );
 }
