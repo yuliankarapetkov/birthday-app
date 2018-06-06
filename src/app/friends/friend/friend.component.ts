@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { FriendsService } from '../shared/services/friends/friends.service';
+import { BirthdayState } from '../store/reducers';
+import { Store } from '@ngrx/store';
+import { CreateFriend } from '../store/actions';
 
 @Component({
     selector: 'friends-friend',
@@ -15,14 +17,12 @@ export class FriendComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private friendsService: FriendsService
+        private store: Store<BirthdayState>
     ) { }
 
     async submitForm() {
-        console.log('ye', this.friendForm.value);
-
         if (this.friendForm.valid) {
-            await this.friendsService.addFriend(this.friendForm.value);
+            this.store.dispatch(new CreateFriend(this.friendForm.value));
         }
     }
 

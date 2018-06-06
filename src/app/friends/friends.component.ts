@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Friend, FriendsService } from './shared/services/friends/friends.service';
-import { Store } from '../../store';
-import { takeWhile } from 'rxjs/internal/operators';
-import { Observable } from 'rxjs/index';
+import { Friend } from './shared/services/friends/friends.service';
+import { Observable } from 'rxjs';
 
 import { DateService } from '../shared/services/date/date.service';
 
-import * as ngrx from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { BirthdayState } from './store/reducers';
 import * as fromStore from './store';
 
@@ -16,17 +14,11 @@ import * as fromStore from './store';
     styleUrls: ['./friends.component.scss']
 })
 export class FriendsComponent implements OnInit, OnDestroy {
-    private componentAlive = true;
-
     friends$: Observable<Friend[]>;
 
-    ngrxFriends$: Observable<any>;
-
     constructor(
-        private store: Store,
-        private friendsService: FriendsService,
-        private dateService: DateService,
-        private ngrxStore: ngrx.Store<BirthdayState>,
+        private store: Store<BirthdayState>,
+        private dateService: DateService
     ) { }
 
     getNextBirthday(birthdayTimestamp: number) {
@@ -45,16 +37,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.ngrxFriends$ = this.ngrxStore.select(fromStore.getFriends);
-        this.ngrxStore.dispatch(new fromStore.LoadFriends());
-
-        this.friends$ = this.store.select<Friend[]>('friends');
-        this.friendsService.friends$
-            .pipe(takeWhile(() => this.componentAlive))
-            .subscribe();
+        this.store.dispatch(new fromStore.LoadFriends());
+        this.friends$ = this.store.select(fromStore.getFriends);
     }
 
     ngOnDestroy() {
-        this.componentAlive = false;
     }
 }
