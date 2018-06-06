@@ -9,11 +9,31 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
-import { Store } from '../store';
+import { StoreModule, MetaReducer } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
+
+import { reducers, effects } from './store';
+
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { MatButton, MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
+
+// not used in production
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { storeFreeze } from 'ngrx-store-freeze';
+import { CustomSerializer } from './store/reducers';
+import { Store } from '../store';
+
+// this would be done dynamically with webpack for builds
+const environment = {
+    development: true,
+    production: false,
+};
+
+export const metaReducers: MetaReducer<any>[] = !environment.production
+    ? [storeFreeze]
+    : [];
 
 const firebaseConfig = {
     apiKey: 'AIzaSyAhOOX-f85OhK-ue-y4Tal7DsqLs2dTcSM',
@@ -39,10 +59,16 @@ const firebaseConfig = {
         AngularFireDatabaseModule,
         // Custom
         AppRoutingModule,
-        SharedModule
+        SharedModule,
+        // Store
+        StoreModule.forRoot(reducers, { metaReducers }),
+        EffectsModule.forRoot(effects),
+        StoreRouterConnectingModule,
+        environment.development ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [
-        Store
+        Store,
+        { provide: RouterStateSerializer, useClass: CustomSerializer }
     ],
     bootstrap: [AppComponent]
 })

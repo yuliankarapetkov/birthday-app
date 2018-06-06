@@ -7,6 +7,7 @@ import { FriendsSharedModule } from '../../shared.module';
 
 import { Store } from '../../../../../store';
 import { AuthService } from '../../../../shared/services/auth/auth.service';
+import { Observable } from 'rxjs/index';
 
 export interface Friend {
     name: string;
@@ -33,6 +34,14 @@ export class FriendsService {
 
     get uid() {
         return this.authService.user.uid;
+    }
+
+    getFriends(): Observable<any> {
+        return this.database.list(`friends/${this.uid}`)
+            .snapshotChanges()
+            .pipe(
+                map(changes => changes.map(c => ({ ...c.payload.val(), $key: c.payload.key })))
+            );
     }
 
     addFriend(friend: Friend) {
