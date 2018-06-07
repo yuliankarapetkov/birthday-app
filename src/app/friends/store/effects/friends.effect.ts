@@ -7,6 +7,7 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import * as fromRoot from '../../../store';
 import * as friendsAction from '../actions/friends.action';
 import * as fromServices from '../../shared/services';
+import * as fromRouter from '../../../store/actions/router.action';
 
 @Injectable()
 export class FriendsEffect {
@@ -39,6 +40,17 @@ export class FriendsEffect {
                         map(() => new friendsAction.CreateFriendSuccess()),
                         catchError(error => of(new friendsAction.CreateFriendFail(error)))
                     );
+            })
+        );
+
+    @Effect()
+    createFriendSuccess$ = this.actions$
+        .ofType(friendsAction.CREATE_FRIEND_SUCCESS)
+        .pipe(
+            map(() => {
+                return new fromRouter.Go({
+                    path: ['/friends']
+                });
             })
         );
 }
