@@ -41,8 +41,6 @@ export function reducer(state = initialState, action: fromFriends.FriendsAction)
         }
 
         case fromFriends.CREATE_FRIEND_SUCCESS: {
-            console.log('CREATE_FRIEND_SUCCESS');
-
             return state;
         }
     }
