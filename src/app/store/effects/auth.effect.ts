@@ -4,9 +4,9 @@ import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
-// import * as fromRoot from '../../../store';
 import * as authAction from '../actions/auth.action';
 import * as fromServices from '../../shared/services';
+import * as fromRouter from '../actions/router.action';
 
 @Injectable()
 export class AuthEffect {
@@ -90,6 +90,28 @@ export class AuthEffect {
                             return of(new authAction.GetUserFail(error));
                         })
                     );
+            })
+        );
+
+    @Effect()
+    setLoggedIn = this.actions$
+        .ofType(authAction.SET_LOGGED_IN)
+        .pipe(
+            map(() => {
+                return new fromRouter.Go({
+                    path: ['/friends']
+                });
+            })
+        );
+
+    @Effect()
+    setNotLoggedIn = this.actions$
+        .ofType(authAction.SET_NOT_LOGGED_IN)
+        .pipe(
+            map(() => {
+                return new fromRouter.Go({
+                    path: ['/auth/login']
+                });
             })
         );
 }
