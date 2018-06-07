@@ -38,6 +38,6 @@ export class AuthService {
     }
 
     logoutUser() {
-        return this.angularFire.auth.signOut();
+        return fromPromise(this.angularFire.auth.signOut());
     }
 }

@@ -12,6 +12,9 @@
             </button>
             <a mat-button routerLink="/friends">friends</a>
             <a mat-button routerLink="/friends/new">add</a>
+            <div *ngIf="user$ | async as user">
+                <a mat-button (click)="logOut()">sign out ({{ user.email }})</a>
+            </div>
         </mat-toolbar>
 
         <router-outlet></router-outlet>

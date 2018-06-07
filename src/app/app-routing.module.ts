@@ -10,10 +10,10 @@ export const ROUTES: Routes = [
         path: 'friends',
         loadChildren: './friends/friends.module#FriendsModule'
     },
-    {
-        path: '**',
-        redirectTo: '/auth/login'
-    }
+    // {
+    //     path: '**',
+    //     redirectTo: '/auth/login'
+    // }
 ];
 
 @NgModule({

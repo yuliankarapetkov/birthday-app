@@ -40,7 +40,14 @@ export class LoginUserSuccess implements Action {
     constructor(public payload: any) {}
 }
 
-// check auth state
+// logout user
+export const LOGOUT_USER = '[Auth] Logout User';
+
+export class LogoutUser implements Action {
+    readonly type = LOGOUT_USER;
+}
+
+// get user
 export const GET_USER = '[Auth] Get User';
 export const GET_USER_FAIL = '[Auth] Get User Fail';
 
@@ -74,6 +81,7 @@ export type AuthAction =
     | LoginUser
     | LoginUserFail
     | LoginUserSuccess
+    | LogoutUser
     | GetUser
     | GetUserFail
     | SetLoggedIn
