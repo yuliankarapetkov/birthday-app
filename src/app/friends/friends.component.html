@@ -8,9 +8,9 @@
                 {{ friend.name }}
             </mat-card-title>
             <mat-card-subtitle>
-                Turns {{ getTurningAge(friend.birthday) }} on {{ getNextBirthday(friend.birthday) | date: 'dd MMMM y' }}
+                Turns {{ friend.turningAge }} on {{ friend.nextBirthday | date: 'dd MMMM y' }}
                 <br />
-                {{ getDaysUntilNextBirthday(friend.birthday) }}
+                {{ friend.daysUntil }}
             </mat-card-subtitle>
         </mat-card-header>
 
