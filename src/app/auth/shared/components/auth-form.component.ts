@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'main-auth-form',
+    selector: 'auth-form',
     templateUrl: './auth-form.component.html',
     styleUrls: ['./auth-form.component.scss']
 })

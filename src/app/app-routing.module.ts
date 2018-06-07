@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 export const ROUTES: Routes = [
     {
-        path: '',
-        loadChildren: './main/main.module#MainModule'
+        path: 'auth',
+        loadChildren: './auth/auth.module#AuthModule'
     },
     {
         path: 'friends',
@@ -12,7 +12,7 @@ export const ROUTES: Routes = [
     },
     {
         path: '**',
-        redirectTo: '/login'
+        redirectTo: '/auth/login'
     }
 ];
 
