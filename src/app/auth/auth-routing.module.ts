@@ -9,6 +9,11 @@ export const ROUTES: Routes = [
         path: '',
         children: [
             {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'login',
+            },
+            {
                 path: 'login',
                 component: LoginComponent
             },

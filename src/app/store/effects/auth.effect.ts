@@ -54,6 +54,20 @@ export class AuthEffect {
         );
 
     @Effect()
+    logoutUser$ = this.actions$
+        .ofType(authAction.LOGOUT_USER)
+        .pipe(
+            switchMap(() => {
+                return this.authService
+                    .logoutUser()
+                    .pipe(
+                        map(() => new authAction.GetUser()),
+                        catchError(error => of(new authAction.LoginUserFail(error)))
+                    );
+            })
+        );
+
+    @Effect()
     getUser$ = this.actions$
         .ofType(authAction.GET_USER)
         .pipe(
