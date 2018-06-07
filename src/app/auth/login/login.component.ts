@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 
 @Component({
-    selector: 'main-login',
+    selector: 'auth-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })

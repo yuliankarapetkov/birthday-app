@@ -17,5 +17,5 @@ import { AuthFormComponent } from './components/auth-form.component';
         AuthFormComponent
     ]
 })
-export class MainSharedModule {
+export class AuthSharedModule {
 }

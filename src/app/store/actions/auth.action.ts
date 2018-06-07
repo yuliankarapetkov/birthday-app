@@ -41,22 +41,29 @@ export class LoginUserSuccess implements Action {
 }
 
 // check auth state
-export const CHECK_AUTH_STATE = '[Auth] Check Auth State';
-export const CHECK_AUTH_STATE_FAIL = '[Auth] Check Auth State Fail';
-export const CHECK_AUTH_STATE_SUCCESS = '[Auth] Check Auth State Success';
+export const GET_USER = '[Auth] Get User';
+export const GET_USER_FAIL = '[Auth] Get User Fail';
 
-export class CheckAuthState implements Action {
-    readonly type = CHECK_AUTH_STATE;
+export class GetUser implements Action {
+    readonly type = GET_USER;
 }
 
-export class CheckAuthStateFail implements Action {
-    readonly type = CHECK_AUTH_STATE_FAIL;
+export class GetUserFail implements Action {
+    readonly type = GET_USER_FAIL;
     constructor(public payload: any) {}
 }
 
-export class CheckAuthStateSuccess implements Action {
-    readonly type = CHECK_AUTH_STATE_SUCCESS;
+// logged in
+export const SET_LOGGED_IN = '[Auth] Set Logged In';
+export const SET_NOT_LOGGED_IN = '[Auth] Set Not Logged In';
+
+export class SetLoggedIn implements Action {
+    readonly type = SET_LOGGED_IN;
     constructor(public payload: any) {}
+}
+
+export class SetNotLoggedIn implements Action {
+    readonly type = SET_NOT_LOGGED_IN;
 }
 
 // action types
@@ -67,6 +74,7 @@ export type AuthAction =
     | LoginUser
     | LoginUserFail
     | LoginUserSuccess
-    | CheckAuthState
-    | CheckAuthStateFail
-    | CheckAuthStateSuccess;
+    | GetUser
+    | GetUserFail
+    | SetLoggedIn
+    | SetNotLoggedIn;

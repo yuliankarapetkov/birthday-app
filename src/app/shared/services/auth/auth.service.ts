@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+
+import { Observable } from 'rxjs';
+import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import { Store } from '../../../../store';
 import { SharedModule } from '../../shared.module';
-import { Observable } from 'rxjs';
-import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 export interface  User {
     email: string;
@@ -19,7 +18,6 @@ export interface  User {
 })
 export class AuthService {
     constructor(
-        private store: Store,
         private angularFire: AngularFireAuth
     ) { }
 
@@ -28,6 +26,7 @@ export class AuthService {
     }
 
     get authState() {
+        console.log('vika');
         return this.angularFire.authState;
     }
 
