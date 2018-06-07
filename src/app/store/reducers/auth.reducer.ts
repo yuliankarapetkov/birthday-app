@@ -11,8 +11,6 @@ export const initialState: AuthState = {
 };
 
 export function authReducer(state = initialState, action: fromAuth.AuthAction): AuthState {
-    console.log('action type', action);
-
     switch (action.type) {
         case fromAuth.SET_LOGGED_IN: {
             const user = action.payload;

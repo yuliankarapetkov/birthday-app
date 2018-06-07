@@ -62,7 +62,6 @@ export class AuthEffect {
                     .authState
                     .pipe(
                         map((res: any) => {
-                            console.log('res', res);
                             let user;
                             if (res) {
                                 const { uid, email } = res;

@@ -26,7 +26,6 @@ export class AuthService {
     }
 
     get authState() {
-        console.log('vika');
         return this.angularFire.authState;
     }
 
