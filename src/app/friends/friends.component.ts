@@ -5,9 +5,9 @@ import { MatDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
 
-import { BirthdayState } from './store/reducers';
 import * as fromStore from './store';
 import { RemoveFriendDialogComponent } from './shared/components/remove-friend-dialog/remove-friend-dialog.component';
+import { Friend } from './shared/models';
 
 @Component({
     selector: 'friends-root',
@@ -20,11 +20,11 @@ export class FriendsComponent implements OnInit, OnDestroy {
     friends$: Observable<any[]>;
 
     constructor(
-        private store: Store<BirthdayState>,
+        private store: Store<fromStore.BirthdayState>,
         private removeDialog: MatDialog
     ) { }
 
-    removeFriend(friend: any) {
+    removeFriend(friend: Friend) {
         this.subscription = this.removeDialog
             .open(RemoveFriendDialogComponent, {
                 data: { name: friend.name }
@@ -33,8 +33,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
             .subscribe(result => {
                 const remove = result;
                 if (remove) {
-                    const { $key } = friend;
-                    this.store.dispatch(new fromStore.RemoveFriend($key));
+                    const { key } = friend;
+                    this.store.dispatch(new fromStore.RemoveFriend(key));
                 }
             });
     }

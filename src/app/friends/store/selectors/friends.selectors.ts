@@ -24,7 +24,7 @@ export const getSelectedFriend = createSelector(
     getFormattedFriends,
     fromRoot.getRouterState,
     (friends, router) => {
-        return router.state && friends.find(friend => friend.$key === router.state.params.friendId);
+        return router.state && friends.find(friend => friend.key === router.state.params.friendId);
     }
 );
 

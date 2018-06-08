@@ -1,23 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 
 import * as fromStore from './store';
-import { User } from './shared/services';
+import * as fromModels from './shared/models';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    user$: Observable<User>
+    user$: Observable<fromModels.User>
 
     constructor(
-        private store: Store<fromStore.State>,
-        private router: Router
+        private store: Store<fromStore.State>
     ) {}
 
     logOut() {

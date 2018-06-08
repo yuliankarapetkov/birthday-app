@@ -4,10 +4,10 @@ import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
-import * as fromRoot from '../../../store';
 import * as friendsAction from '../actions/friends.action';
 import * as fromServices from '../../shared/services';
 import * as fromRouter from '../../../store/actions/router.action';
+import { Friend } from '../../shared/models';
 
 @Injectable()
 export class FriendsEffect {
@@ -33,7 +33,7 @@ export class FriendsEffect {
         .ofType(friendsAction.CREATE_FRIEND)
         .pipe(
             map((action: friendsAction.CreateFriend) => action.payload),
-            switchMap((friend: any) => {
+            switchMap((friend: Friend) => {
                 return this.friendsService
                     .addFriend(friend)
                     .pipe(
@@ -59,9 +59,10 @@ export class FriendsEffect {
         .ofType(friendsAction.UPDATE_FRIEND)
         .pipe(
             map((action: friendsAction.UpdateFriend) => action.payload),
-            switchMap((friend: any) => {
+            switchMap((friend: Friend) => {
+                const { key, ...friendToUpdate } = friend;
                 return this.friendsService
-                    .updateFriend(friend.key, friend)
+                    .updateFriend(key, friendToUpdate)
                     .pipe(
                         map(() => new friendsAction.UpdateFriendSuccess()),
                         catchError(error => of(new friendsAction.UpdateFriendFail(error)))

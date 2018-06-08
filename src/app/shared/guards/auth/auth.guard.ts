@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
+
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../../../store';
-
 import { SharedModule } from '../../shared.module';
 
 @Injectable({
