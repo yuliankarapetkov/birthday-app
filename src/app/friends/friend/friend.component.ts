@@ -22,7 +22,6 @@ export class FriendComponent implements OnInit, OnDestroy {
     });
     friendExists = false;
 
-
     constructor(
         private formBuilder: FormBuilder,
         private store: Store<BirthdayState>

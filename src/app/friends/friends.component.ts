@@ -17,6 +17,14 @@ export class FriendsComponent implements OnInit, OnDestroy {
         private store: Store<BirthdayState>
     ) { }
 
+    removeFriend(friend: any) {
+        const remove = window.confirm('Are you sure?');
+        if (remove) {
+            const { key } = friend;
+            this.store.dispatch(new fromStore.RemoveFriend(key));
+        }
+    }
+
     ngOnInit() {
         this.store.dispatch(new fromStore.LoadFriends());
         this.friends$ = this.store.select(fromStore.getDetailedFriends);

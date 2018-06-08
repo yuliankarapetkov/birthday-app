@@ -49,4 +49,8 @@ export class FriendsService {
         const friendFormatted = this.convertToTimestampFriend(friend);
         return from(this.database.object(`friends/${this.uid}/${key}`).update(friendFormatted));
     }
+
+    removeFriend(key: string) {
+        return from(this.database.list(`friends/${this.uid}`).remove(key));
+    }
 }
