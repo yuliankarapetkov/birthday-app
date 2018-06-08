@@ -1,19 +1,38 @@
 <div class="friends">
 
-    <mat-card *ngFor="let friend of (friends$ | async)">
+    <div *ngFor="let friend of (friends$ | async)" class="friend">
+        <mat-card>
 
-        <mat-card-header>
-            <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba1.jpg">
-            <mat-card-title>
-                {{ friend.name }}
-            </mat-card-title>
-            <mat-card-subtitle>
-                Turns {{ friend.turningAge }} on {{ friend.nextBirthday | date: 'dd MMMM y' }}
-                <br />
-                {{ friend.daysUntil }}
-            </mat-card-subtitle>
-        </mat-card-header>
+            <mat-card-header>
+                <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba1.jpg">
 
-    </mat-card>
+                <mat-card-title>
+                    {{ friend.name }}
+                </mat-card-title>
+
+                <mat-card-subtitle>
+                    Turns {{ friend.turningAge }} on {{ friend.nextBirthday | date: 'dd MMMM y' }}
+                    <br />
+                    {{ friend.daysUntil }} days left
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+                <!--<button mat-button color="primary">Congratulate!</button>-->
+                <div class="friend__secondary-actions">
+                    <a
+                        mat-icon-button
+                        matTooltip="Edit {{ friend.name }}'s details"
+                        [routerLink]="[ friend.$key ]">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                    <button
+                        mat-icon-button
+                        matTooltip="Remove {{ friend.name }} from your friends">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 
 </div>

@@ -39,10 +39,6 @@ export function reducer(state = initialState, action: fromFriends.FriendsAction)
                 loaded: false
             };
         }
-
-        case fromFriends.CREATE_FRIEND_SUCCESS: {
-            return state;
-        }
     }
 
     return state;

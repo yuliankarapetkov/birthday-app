@@ -15,6 +15,19 @@ export const getFriends = createSelector(getFriendsState, fromFriends.getFriends
 export const getFriendsLoaded = createSelector(getFriendsState, fromFriends.getFriendsLoaded);
 export const getFriendsLoading = createSelector(getFriendsState, fromFriends.getFriendsLoading);
 
+export const getFormattedFriends = createSelector(
+    getFriends,
+    (friends) => friends.map(friend => ({ ...friend, birthday: new Date(friend.birthday) }))
+);
+
+export const getSelectedFriend = createSelector(
+    getFormattedFriends,
+    fromRoot.getRouterState,
+    (friends, router) => {
+        return router.state && friends.find(friend => friend.$key === router.state.params.friendId);
+    }
+);
+
 export const getDetailedFriends = createSelector(getFriends,
     (friends) => {
         const detailedFriends = friends
@@ -26,6 +39,7 @@ export const getDetailedFriends = createSelector(getFriends,
                     turningAge = DateUtil.getTurningAge(daysUntil, age),
                     detailedFriend = {
                         ...friend,
+                        birthday,
                         age,
                         turningAge,
                         nextBirthday,

@@ -15,6 +15,11 @@ export const ROUTES: Routes = [
         path: 'new',
         component: FriendComponent,
         canActivate: [FriendsGuard]
+    },
+    {
+        path: ':friendId',
+        component: FriendComponent,
+        canActivate: [FriendsGuard]
     }
 ];
 

@@ -16,7 +16,6 @@ export class FriendsGuard implements CanActivate {
     constructor(private store: Store<fromStore.BirthdayState>) {}
 
     canActivate(): Observable<boolean> {
-        console.log('friends guard called');
         return this.checkStore().pipe(
             switchMap(() => of(true)),
             catchError(() => of(false))

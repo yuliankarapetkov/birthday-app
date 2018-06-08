@@ -44,8 +44,34 @@ export class FriendsEffect {
         );
 
     @Effect()
+    updateFriend$ = this.actions$
+        .ofType(friendsAction.UPDATE_FRIEND)
+        .pipe(
+            map((action: friendsAction.UpdateFriend) => action.payload),
+            switchMap((friend: any) => {
+                return this.friendsService
+                    .updateFriend(friend.key, friend)
+                    .pipe(
+                        map(() => new friendsAction.UpdateFriendSuccess()),
+                        catchError(error => of(new friendsAction.UpdateFriendFail(error)))
+                    );
+            })
+        );
+
+    @Effect()
     createFriendSuccess$ = this.actions$
         .ofType(friendsAction.CREATE_FRIEND_SUCCESS)
+        .pipe(
+            map(() => {
+                return new fromRouter.Go({
+                    path: ['/friends']
+                });
+            })
+        );
+
+    @Effect()
+    updateFriendSuccess$ = this.actions$
+        .ofType(friendsAction.UPDATE_FRIEND_SUCCESS)
         .pipe(
             map(() => {
                 return new fromRouter.Go({

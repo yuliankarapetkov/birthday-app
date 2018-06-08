@@ -27,6 +27,11 @@ export class FriendsService {
         return this.authService.user.uid;
     }
 
+    private convertToTimestampFriend(friend: Friend) {
+        const birthday = friend.birthday.getTime() - (friend.birthday.getTimezoneOffset() * 60 * 1000);
+        return { ...friend, birthday };
+    }
+
     getFriends(): Observable<any> {
         return this.database.list(`friends/${this.uid}`)
             .snapshotChanges()
@@ -36,8 +41,12 @@ export class FriendsService {
     }
 
     addFriend(friend: Friend) {
-        const birthday = friend.birthday.getTime() - (friend.birthday.getTimezoneOffset() * 60 * 1000);
-        const friendFormatted = { ...friend, birthday };
+        const friendFormatted = this.convertToTimestampFriend(friend);
         return from(this.database.list(`friends/${this.uid}`).push(friendFormatted));
+    }
+
+    updateFriend(key: string, friend: Friend) {
+        const friendFormatted = this.convertToTimestampFriend(friend);
+        return from(this.database.object(`friends/${this.uid}/${key}`).update(friendFormatted));
     }
 }
