@@ -7,12 +7,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { SharedModule } from '../../shared.module';
 
-export interface  User {
-    email: string;
-    uid: string;
-    authenticated: boolean;
-}
-
 @Injectable({
   providedIn: SharedModule
 })

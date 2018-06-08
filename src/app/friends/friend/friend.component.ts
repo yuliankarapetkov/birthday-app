@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BirthdayState } from '../store/reducers';
-import { Store } from '@ngrx/store';
-import { CreateFriend, UpdateFriend } from '../store/actions';
+
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
@@ -24,16 +23,17 @@ export class FriendComponent implements OnInit, OnDestroy {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<BirthdayState>
+        private store: Store<fromStore.BirthdayState>
     ) { }
 
     async submitForm() {
         if (this.friendForm.valid) {
             if (this.friendExists) {
-                const friend = { ...this.friendForm.value, key: this.friendKey };
-                this.store.dispatch(new UpdateFriend(friend));
+                const { name, birthday } = this.friendForm.value;
+                const friend = { key: this.friendKey, name, birthday};
+                this.store.dispatch(new fromStore.UpdateFriend(friend));
             } else {
-                this.store.dispatch(new CreateFriend(this.friendForm.value));
+                this.store.dispatch(new fromStore.CreateFriend(this.friendForm.value));
             }
         }
     }
@@ -42,10 +42,10 @@ export class FriendComponent implements OnInit, OnDestroy {
         this.subscription = this.store.select(fromStore.getSelectedFriend)
             .subscribe(
                 (friend: any = null) => {
-                    this.friendExists = !!(friend && friend.$key);
+                    this.friendExists = !!(friend && friend.key);
 
                     if (this.friendExists) {
-                        this.friendKey = friend.$key;
+                        this.friendKey = friend.key;
                         this.friendForm.patchValue(friend);
                     } else {
                         this.friendKey = null;

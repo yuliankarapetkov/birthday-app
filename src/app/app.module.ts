@@ -23,7 +23,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { CustomSerializer } from './store/reducers';
-import { Store } from '../store';
 
 // this would be done dynamically with webpack for builds
 const environment = {
@@ -67,7 +66,6 @@ const firebaseConfig = {
         environment.development ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [
-        Store,
         { provide: RouterStateSerializer, useClass: CustomSerializer }
     ],
     bootstrap: [AppComponent]

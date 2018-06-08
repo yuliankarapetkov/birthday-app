@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
@@ -14,8 +13,7 @@ export class LoginComponent implements OnInit {
     loginError: string;
 
     constructor(
-        private store: Store<fromStore.State>,
-        private router: Router
+        private store: Store<fromStore.State>
     ) { }
 
     ngOnInit() {

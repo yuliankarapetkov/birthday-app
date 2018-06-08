@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/internal/operators';
+
+import { map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 
+import * as fromServices from '../../../../shared/services';
+import * as fromModels from '../../models';
 import { FriendsSharedModule } from '../../shared.module';
-
-import { AuthService } from '../../../../shared/services/auth/auth.service';
-import { from, Observable } from 'rxjs';
-
-export interface Friend {
-    name: string;
-    birthday: any;
-    $key: string;
-}
 
 @Injectable({
   providedIn: FriendsSharedModule
@@ -20,14 +15,14 @@ export interface Friend {
 export class FriendsService {
     constructor(
         private database: AngularFireDatabase,
-        private authService: AuthService
+        private authService: fromServices.AuthService
     ) { }
 
     get uid() {
         return this.authService.user.uid;
     }
 
-    private convertToTimestampFriend(friend: Friend) {
+    private convertToTimestampFriend(friend: fromModels.Friend) {
         const birthday = friend.birthday.getTime() - (friend.birthday.getTimezoneOffset() * 60 * 1000);
         return { ...friend, birthday };
     }
@@ -36,16 +31,16 @@ export class FriendsService {
         return this.database.list(`friends/${this.uid}`)
             .snapshotChanges()
             .pipe(
-                map(changes => changes.map(c => ({ ...c.payload.val(), $key: c.payload.key })))
+                map(changes => changes.map(c => ({ ...c.payload.val(), key: c.payload.key })))
             );
     }
 
-    addFriend(friend: Friend) {
+    addFriend(friend: fromModels.Friend) {
         const friendFormatted = this.convertToTimestampFriend(friend);
         return from(this.database.list(`friends/${this.uid}`).push(friendFormatted));
     }
 
-    updateFriend(key: string, friend: Friend) {
+    updateFriend(key: string, friend: fromModels.Friend) {
         const friendFormatted = this.convertToTimestampFriend(friend);
         return from(this.database.object(`friends/${this.uid}/${key}`).update(friendFormatted));
     }

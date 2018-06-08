@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store';
 
+import { Friend } from '../../shared/models';
+
 // load friends
 export const LOAD_FRIENDS = '[Friends] Load Friends';
 export const LOAD_FRIENDS_FAIL = '[Friends] Load Friends Fail';
@@ -16,7 +18,7 @@ export class LoadFriendsFail implements Action {
 
 export class LoadFriendsSuccess implements Action {
     readonly type = LOAD_FRIENDS_SUCCESS;
-    constructor(public payload: any[]) {}
+    constructor(public payload: Friend[]) {}
 }
 
 // create friend
@@ -26,7 +28,7 @@ export const CREATE_FRIEND_SUCCESS = '[Friends] Create Friend Success';
 
 export class CreateFriend implements Action {
     readonly type = CREATE_FRIEND;
-    constructor(public payload: any) {}
+    constructor(public payload: Friend) {}
 }
 
 export class CreateFriendFail implements Action {
@@ -36,7 +38,6 @@ export class CreateFriendFail implements Action {
 
 export class CreateFriendSuccess implements Action {
     readonly type = CREATE_FRIEND_SUCCESS;
-    // constructor(public payload: any) {}
 }
 
 // update friend
@@ -46,7 +47,7 @@ export const UPDATE_FRIEND_SUCCESS = '[Friends] Update Friend Success';
 
 export class UpdateFriend implements Action {
     readonly type = UPDATE_FRIEND;
-    constructor(public payload: any) {}
+    constructor(public payload: Friend) {}
 }
 
 export class UpdateFriendFail implements Action {
