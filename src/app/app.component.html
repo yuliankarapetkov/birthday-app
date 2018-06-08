@@ -3,18 +3,52 @@
     <mat-sidenav-container (backdropClick)="sidenav.close()">
 
         <mat-sidenav #sidenav mode="side">
-            Sidenav
+            <div *ngIf="user$ | async as user">
+                <!--<a mat-button (click)="logOut()">sign out ({{ user.email }})</a>-->
+                <mat-toolbar color="primary">
+                    <mat-toolbar-row>
+
+                    </mat-toolbar-row>
+                    <mat-toolbar-row>
+                        {{ user.email }}
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+
+            <mat-list>
+                <mat-list-item>
+                    <a mat-button routerLink="/friends">
+                        <mat-icon mat-list-icon>people</mat-icon>
+                        See all friends
+                    </a>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <a mat-button routerLink="/friends/new">
+                        <mat-icon mat-list-icon>person_add</mat-icon>
+                        Add friends
+                    </a>
+                </mat-list-item>
+
+                <mat-divider></mat-divider>
+                <h3 mat-subheader>
+                    Settings
+                </h3>
+
+                <mat-list-item>
+                    <button mat-button (click)="logOut()">
+                        <mat-icon mat-list-icon>exit_to_app</mat-icon>
+                        Sign out
+                    </button>
+                </mat-list-item>
+            </mat-list>
+
         </mat-sidenav>
 
         <mat-toolbar color="primary">
             <button mat-button (click)="sidenav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <a mat-button routerLink="/friends">friends</a>
-            <a mat-button routerLink="/friends/new">add</a>
-            <div *ngIf="user$ | async as user">
-                <a mat-button (click)="logOut()">sign out ({{ user.email }})</a>
-            </div>
         </mat-toolbar>
 
         <router-outlet></router-outlet>
