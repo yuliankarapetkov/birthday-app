@@ -56,7 +56,25 @@ export class UpdateFriendFail implements Action {
 
 export class UpdateFriendSuccess implements Action {
     readonly type = UPDATE_FRIEND_SUCCESS;
-    // constructor(public payload: any) {}
+}
+
+// update friend
+export const REMOVE_FRIEND = '[Friends] Remove Friend';
+export const REMOVE_FRIEND_FAIL = '[Friends] Remove Friend Fail';
+export const REMOVE_FRIEND_SUCCESS = '[Friends] Remove Friend Success';
+
+export class RemoveFriend implements Action {
+    readonly type = REMOVE_FRIEND;
+    constructor(public payload: string) {}
+}
+
+export class RemoveFriendFail implements Action {
+    readonly type = REMOVE_FRIEND_FAIL;
+    constructor(public payload: any) {}
+}
+
+export class RemoveFriendSuccess implements Action {
+    readonly type = REMOVE_FRIEND_SUCCESS;
 }
 
 // action types
@@ -69,4 +87,7 @@ export type FriendsAction =
     | CreateFriendSuccess
     | UpdateFriend
     | UpdateFriendFail
-    | UpdateFriendSuccess;
+    | UpdateFriendSuccess
+    | RemoveFriend
+    | RemoveFriendFail
+    | RemoveFriendSuccess;

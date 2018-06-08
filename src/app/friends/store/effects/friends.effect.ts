@@ -44,6 +44,17 @@ export class FriendsEffect {
         );
 
     @Effect()
+    createFriendSuccess$ = this.actions$
+        .ofType(friendsAction.CREATE_FRIEND_SUCCESS)
+        .pipe(
+            map(() => {
+                return new fromRouter.Go({
+                    path: ['/friends']
+                });
+            })
+        );
+
+    @Effect()
     updateFriend$ = this.actions$
         .ofType(friendsAction.UPDATE_FRIEND)
         .pipe(
@@ -59,8 +70,8 @@ export class FriendsEffect {
         );
 
     @Effect()
-    createFriendSuccess$ = this.actions$
-        .ofType(friendsAction.CREATE_FRIEND_SUCCESS)
+    updateFriendSuccess$ = this.actions$
+        .ofType(friendsAction.UPDATE_FRIEND_SUCCESS)
         .pipe(
             map(() => {
                 return new fromRouter.Go({
@@ -70,13 +81,17 @@ export class FriendsEffect {
         );
 
     @Effect()
-    updateFriendSuccess$ = this.actions$
-        .ofType(friendsAction.UPDATE_FRIEND_SUCCESS)
+    removeFriend$ = this.actions$
+        .ofType(friendsAction.REMOVE_FRIEND)
         .pipe(
-            map(() => {
-                return new fromRouter.Go({
-                    path: ['/friends']
-                });
+            map((action: friendsAction.RemoveFriend) => action.payload),
+            switchMap((key: string) => {
+                return this.friendsService
+                    .removeFriend(key)
+                    .pipe(
+                        map(() => new friendsAction.RemoveFriendSuccess()),
+                        catchError(error => of(new friendsAction.RemoveFriendFail(error)))
+                    );
             })
         );
 }

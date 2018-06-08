@@ -27,7 +27,8 @@
                     </a>
                     <button
                         mat-icon-button
-                        matTooltip="Remove {{ friend.name }} from your friends">
+                        matTooltip="Remove {{ friend.name }} from your friends"
+                        (click)="removeFriend(friend)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
