@@ -6,7 +6,7 @@ import {
     MatDatepickerModule,
     MatIconModule,
     MatInputModule,
-    MatNativeDateModule, MatSidenavModule, MatToolbarModule
+    MatNativeDateModule, MatSidenavModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -19,7 +19,8 @@ import {
         MatNativeDateModule,
         MatBadgeModule,
         MatSidenavModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatTooltipModule
     ],
     exports: [
         MatCardModule,
@@ -30,7 +31,8 @@ import {
         MatNativeDateModule,
         MatBadgeModule,
         MatSidenavModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatTooltipModule
     ],
     declarations: []
 })
