@@ -1,7 +1,8 @@
 import * as fromFriends from '../actions/friends.action';
+import { Friend } from '../../shared/models';
 
 export interface FriendsState {
-    list: any[];
+    list: Friend[];
     loaded: boolean;
     loading: boolean;
 }

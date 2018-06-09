@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 
@@ -8,6 +8,8 @@ import { Store } from '@ngrx/store';
 import * as fromStore from './store';
 import { RemoveFriendDialogComponent } from './shared/components/remove-friend-dialog/remove-friend-dialog.component';
 import { Friend } from './shared/models';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/internal/operators';
 
 @Component({
     selector: 'friends-root',
@@ -15,9 +17,11 @@ import { Friend } from './shared/models';
     styleUrls: ['./friends.component.scss']
 })
 export class FriendsComponent implements OnInit, OnDestroy {
-    private subscription: Subscription;
+    private dialogSubscription: Subscription;
+    private filteredFriendsSubscription: Subscription;
 
-    friends$: Observable<any[]>;
+    searchTerm: FormControl = new FormControl();
+    filteredFriends: Friend[];
 
     constructor(
         private store: Store<fromStore.BirthdayState>,
@@ -25,7 +29,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     ) { }
 
     removeFriend(friend: Friend) {
-        this.subscription = this.removeDialog
+        this.dialogSubscription = this.removeDialog
             .open(RemoveFriendDialogComponent, {
                 data: { name: friend.name }
             })
@@ -41,12 +45,31 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.store.dispatch(new fromStore.LoadFriends());
-        this.friends$ = this.store.select(fromStore.getDetailedFriends);
+
+        const friends$ = this.store.select(fromStore.getDetailedFriends);
+        const searchTerm$ = this.searchTerm.valueChanges
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+                startWith('')
+            );
+
+        this.filteredFriendsSubscription = combineLatest(
+            friends$,
+            searchTerm$)
+            .subscribe(([friends, term]) => {
+                const searchTerm = term ? term.toLowerCase() : null;
+                this.filteredFriends = searchTerm
+                    ? friends.filter(friend => friend.name.toLowerCase().indexOf(searchTerm) !== -1)
+                    : friends;
+            });
     }
 
     ngOnDestroy() {
-        if (this.subscription && !this.subscription.closed) {
-            this.subscription.unsubscribe();
+        if (this.dialogSubscription && !this.dialogSubscription.closed) {
+            this.dialogSubscription.unsubscribe();
         }
+
+        this.filteredFriendsSubscription.unsubscribe();
     }
 }
