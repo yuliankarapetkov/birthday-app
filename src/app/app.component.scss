@@ -1,6 +1,10 @@
 .mat-sidenav {
     min-width: 320px;
 
+    .mat-card-avatar {
+        margin-right: 16px;
+    }
+
     .mat-list-item {
         padding: 5px 0;
         width: 100%;
