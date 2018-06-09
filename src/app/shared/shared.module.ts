@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 
 import { SharedMaterialModule } from './shared-material.module';
 
+import { components } from './components';
+
 const modules = [
     CommonModule,
     ReactiveFormsModule,
@@ -16,9 +18,12 @@ const modules = [
     imports: [
         ...modules
     ],
-    exports: [
-        ...modules
+    declarations: [
+        ...components
     ],
-    declarations: []
+    exports: [
+        ...modules,
+        ...components
+    ]
 })
 export class SharedModule { }
