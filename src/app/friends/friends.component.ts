@@ -10,6 +10,7 @@ import { RemoveFriendDialogComponent } from './shared/components/remove-friend-d
 import { Friend } from './shared/models';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/internal/operators';
+import { SearchInputService } from '../shared/services/search-input/search-input.service';
 
 @Component({
     selector: 'friends-root',
@@ -20,12 +21,12 @@ export class FriendsComponent implements OnInit, OnDestroy {
     private dialogSubscription: Subscription;
     private filteredFriendsSubscription: Subscription;
 
-    searchTerm: FormControl = new FormControl();
     filteredFriends: Friend[];
 
     constructor(
         private store: Store<fromStore.BirthdayState>,
-        private removeDialog: MatDialog
+        private removeDialog: MatDialog,
+        private searchBarService: SearchInputService
     ) { }
 
     removeFriend(friend: Friend) {
@@ -47,7 +48,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.store.dispatch(new fromStore.LoadFriends());
 
         const friends$ = this.store.select(fromStore.getDetailedFriends);
-        const searchTerm$ = this.searchTerm.valueChanges
+        const searchTerm$ = this.searchBarService.inputValueChanged
             .pipe(
                 debounceTime(500),
                 distinctUntilChanged(),

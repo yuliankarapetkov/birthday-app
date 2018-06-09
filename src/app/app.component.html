@@ -1,8 +1,8 @@
 <div class="app">
 
-    <mat-sidenav-container (backdropClick)="sidenav.close()">
+    <mat-sidenav-container (backdropClick)="sideNav.close()">
 
-        <mat-sidenav #sidenav mode="side">
+        <mat-sidenav #sideNav mode="side">
             <div *ngIf="user$ | async as user">
                 <!--<a mat-button (click)="logOut()">sign out ({{ user.email }})</a>-->
                 <mat-toolbar color="primary">
@@ -46,23 +46,10 @@
 
         </mat-sidenav>
 
-        <mat-toolbar color="primary">
-            <button mat-button (click)="sidenav.toggle()">
-                <mat-icon>menu</mat-icon>
-            </button>
-
-            Birthday App
-
-            <!--<div class="friend-search">-->
-
-                <!--<button mat-icon-button>-->
-                    <!--<mat-icon>search</mat-icon>-->
-                <!--</button>-->
-                <!--<mat-form-field>-->
-                    <!--<input matInput autocomplete="false">-->
-                <!--</mat-form-field>-->
-            <!--</div>-->
-        </mat-toolbar>
+        <app-header
+            (sideNavToggled)="onSideNavToggled()"
+            (searchInputValueChanged)="onSearchInputValueChanged($event)">
+        </app-header>
 
         <router-outlet></router-outlet>
 
