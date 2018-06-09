@@ -1,6 +1,14 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <mat-form-field>
+            <input matInput [formControl]="searchTerm" placeholder="Search">
+        </mat-form-field>
+    </mat-toolbar-row>
+</mat-toolbar>
+
 <div class="friends">
 
-    <div *ngFor="let friend of (friends$ | async)" class="friend">
+    <div *ngFor="let friend of filteredFriends" class="friend">
         <mat-card>
 
             <mat-card-header>
