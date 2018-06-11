@@ -11,6 +11,7 @@
         </mat-sidenav>
 
         <app-header
+            [config]="headerConfig$ | async"
             (sideNavToggled)="onSideNavToggled()"
             (searchInputValueChanged)="onSearchInputValueChanged($event)">
         </app-header>
