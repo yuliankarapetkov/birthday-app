@@ -17,11 +17,7 @@ export const ROUTES: Routes = [
         path: 'friends',
         loadChildren: './friends/friends.module#FriendsModule',
         canActivate: [AuthGuard]
-    },
-    // {
-    //     path: '**',
-    //     redirectTo: '/auth/login'
-    // }
+    }
 ];
 
 @NgModule({

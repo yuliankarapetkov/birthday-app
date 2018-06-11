@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthComponent } from './auth.component';
 
 export const ROUTES: Routes = [
     {
         path: '',
+        component: AuthComponent,
         children: [
             {
                 path: '',

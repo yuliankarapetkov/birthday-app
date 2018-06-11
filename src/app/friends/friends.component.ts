@@ -1,76 +1,46 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, Subscription } from 'rxjs';
-
-import { MatDialog } from '@angular/material';
-
+import { Component, OnInit } from '@angular/core';
+import { SidenavConfig, SidenavItemAction } from '../shared/models';
 import { Store } from '@ngrx/store';
-
-import * as fromStore from './store';
-import { RemoveFriendDialogComponent } from './shared/components/remove-friend-dialog/remove-friend-dialog.component';
-import { Friend } from './shared/models';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/internal/operators';
-import { SearchInputService } from '../shared/services/search-input/search-input.service';
+import * as fromStore from '../store';
 
 @Component({
     selector: 'friends-root',
     templateUrl: './friends.component.html',
     styleUrls: ['./friends.component.scss']
 })
-export class FriendsComponent implements OnInit, OnDestroy {
-    private dialogSubscription: Subscription;
-    private filteredFriendsSubscription: Subscription;
-
-    filteredFriends: Friend[];
+export class FriendsComponent implements OnInit {
+    private readonly sidenavConfig: SidenavConfig = {
+        sections: [{
+            hasDivider: false,
+            items: [{
+                name: 'See all friends',
+                icon: 'people',
+                isLinkItem: true,
+                link: '/friends'
+            }, {
+                name: 'Add a friend',
+                icon: 'person_add',
+                isLinkItem: true,
+                link: '/friends/new'
+            }]
+        }, {
+            name: 'Settings',
+            hasDivider: true,
+            items: [{
+                name: 'Sign out',
+                icon: 'exit_to_app',
+                isLinkItem: false,
+                action: SidenavItemAction.SignOut
+            }]
+        }]
+    };
 
     constructor(
-        private store: Store<fromStore.BirthdayState>,
-        private removeDialog: MatDialog,
-        private searchBarService: SearchInputService
-    ) { }
-
-    removeFriend(friend: Friend) {
-        this.dialogSubscription = this.removeDialog
-            .open(RemoveFriendDialogComponent, {
-                data: { name: friend.name }
-            })
-            .afterClosed()
-            .subscribe(result => {
-                const remove = result;
-                if (remove) {
-                    const { key } = friend;
-                    this.store.dispatch(new fromStore.RemoveFriend(key));
-                }
-            });
+        private store: Store<fromStore.State>
+    ) {
+        this.store.dispatch(new fromStore.SetSidenav(this.sidenavConfig));
     }
 
     ngOnInit() {
-        this.store.dispatch(new fromStore.LoadFriends());
-
-        const friends$ = this.store.select(fromStore.getDetailedFriends);
-        const searchTerm$ = this.searchBarService.inputValueChanged
-            .pipe(
-                debounceTime(500),
-                distinctUntilChanged(),
-                startWith('')
-            );
-
-        this.filteredFriendsSubscription = combineLatest(
-            friends$,
-            searchTerm$)
-            .subscribe(([friends, term]) => {
-                const searchTerm = term ? term.toLowerCase() : null;
-                this.filteredFriends = searchTerm
-                    ? friends.filter(friend => friend.name.toLowerCase().indexOf(searchTerm) !== -1)
-                    : friends;
-            });
-    }
-
-    ngOnDestroy() {
-        if (this.dialogSubscription && !this.dialogSubscription.closed) {
-            this.dialogSubscription.unsubscribe();
-        }
-
-        this.filteredFriendsSubscription.unsubscribe();
     }
 }

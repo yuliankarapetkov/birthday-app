@@ -1,12 +1,12 @@
 <div class="sidenav">
-    <div *ngIf="user">
+    <div>
         <mat-toolbar color="primary">
             <mat-toolbar-row>
 
             </mat-toolbar-row>
             <mat-toolbar-row>
                 <img mat-card-avatar src="https://material-components-web.appspot.com/images/animal3.svg">
-                {{ user.email }}
+                {{ !!user ? user.email : 'This can be you'}}
             </mat-toolbar-row>
         </mat-toolbar>
     </div>

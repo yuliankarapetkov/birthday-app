@@ -1,26 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
-export const enum SidenavItemAction {
-    SignOut
-}
-
-export interface SidenavItem {
-    name: string;
-    icon: string;
-    isLinkItem: boolean;
-    link?: string;
-    action?: SidenavItemAction;
-}
-
-export interface SidenavSection {
-    name?: string;
-    hasDivider: boolean;
-    items: SidenavItem[];
-}
-
-export interface SidenavConfig {
-    sections: SidenavSection[];
-}
+import { SidenavConfig, SidenavItem } from '../../models/sidenav-config.model';
 
 @Component({
     selector: 'app-side-nav',
