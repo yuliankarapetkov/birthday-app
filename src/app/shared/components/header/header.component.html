@@ -6,12 +6,12 @@
 
         Birthday App
 
-        <div class="friend-search">
+        <div *ngIf="config?.showSearchInput" class="search-input">
             <button mat-icon-button>
                 <mat-icon>search</mat-icon>
             </button>
             <mat-form-field>
-                <input type="text" matInput [formControl]="searchInput" autocomplete="nope">
+                <input type="text" matInput [formControl]="searchInput">
             </mat-form-field>
         </div>
     </mat-toolbar>

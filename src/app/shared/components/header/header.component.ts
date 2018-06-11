@@ -1,6 +1,9 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs/index';
+
+import { Subscription } from 'rxjs';
+
+import { HeaderConfig } from '../../models';
 
 @Component({
     selector: 'app-header',
@@ -8,6 +11,8 @@ import { Subscription } from 'rxjs/index';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+    @Input() config: HeaderConfig;
+
     @Output() sideNavToggled = new EventEmitter<void>();
     @Output() searchInputValueChanged = new EventEmitter<string>();
 

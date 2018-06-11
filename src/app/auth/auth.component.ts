@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SidenavConfig } from '../shared/models';
+import { HeaderConfig, SidenavConfig } from '../shared/models';
 import { Store } from '@ngrx/store';
+
 import * as fromStore from '../store';
 
 @Component({
@@ -9,6 +10,10 @@ import * as fromStore from '../store';
     styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
+    private readonly headerConfig: HeaderConfig = {
+        showSearchInput: false
+    };
+
     private readonly sidenavConfig: SidenavConfig = {
         sections: [{
             hasDivider: false,
@@ -28,10 +33,10 @@ export class AuthComponent implements OnInit {
 
     constructor(
         private store: Store<fromStore.State>
-    ) {
-        this.store.dispatch(new fromStore.SetSidenav(this.sidenavConfig));
-    }
+    ) {}
 
     ngOnInit() {
+        this.store.dispatch(new fromStore.SetSidenav(this.sidenavConfig));
+        this.store.dispatch(new fromStore.SetHeader(this.headerConfig));
     }
 }

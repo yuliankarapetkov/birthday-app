@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import * as fromStore from './store';
 import * as fromModels from './shared/models';
 import { SearchInputService } from './shared/services/search-input/search-input.service';
-import { SidenavConfig, SidenavItem, SidenavItemAction } from './shared/models';
+import { HeaderConfig, SidenavConfig, SidenavItem, SidenavItemAction } from './shared/models';
 
 
 @Component({
@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 
     user$: Observable<fromModels.User>
 
+    headerConfig$: Observable<HeaderConfig>;
     sidenavConfig$: Observable<SidenavConfig>;
 
     constructor(
@@ -52,5 +53,6 @@ export class AppComponent implements OnInit {
         this.user$ = this.store.select(fromStore.getUser);
 
         this.sidenavConfig$ = this.store.select(fromStore.getSidenav);
+        this.headerConfig$ = this.store.select(fromStore.getHeader);
     }
 }
