@@ -1,0 +1,29 @@
+<div class="sidenav">
+    <div *ngIf="user">
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+
+            </mat-toolbar-row>
+            <mat-toolbar-row>
+                <img mat-card-avatar src="https://material-components-web.appspot.com/images/animal3.svg">
+                {{ user.email }}
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+
+    <mat-list>
+        <div class="section" *ngFor="let section of config?.sections">
+            <mat-divider *ngIf="section.hasDivider"></mat-divider>
+            <h3 *ngIf="section.name" mat-subheader>
+                {{ section.name }}
+            </h3>
+
+            <mat-list-item *ngFor="let item of section.items">
+                <a mat-button (click)="clickItem(item)">
+                    <mat-icon mat-list-icon>{{ item.icon }}</mat-icon>
+                    {{ item.name }}
+                </a>
+            </mat-list-item>
+        </div>
+    </mat-list>
+</div>
