@@ -4,6 +4,7 @@ import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 
 import * as fromAuth from './auth.reducer';
+import * as fromUi from './ui.reducer';
 
 export interface RouterStateUrl {
     url: string;
@@ -14,15 +15,18 @@ export interface RouterStateUrl {
 export interface State {
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
     auth: fromAuth.AuthState;
+    ui: fromUi.UiState;
 }
 
 export const reducers: ActionReducerMap<State> = {
     routerReducer: fromRouter.routerReducer,
-    auth: fromAuth.authReducer
+    auth: fromAuth.authReducer,
+    ui: fromUi.uiReducer
 };
 
 export const getRouterState =  createFeatureSelector<fromRouter.RouterReducerState<RouterStateUrl>>('routerReducer');
 export const getAuthState = createFeatureSelector<fromAuth.AuthState>('auth');
+export const getUiState = createFeatureSelector<fromUi.UiState>('ui');
 
 export class CustomSerializer implements fromRouter.RouterStateSerializer<RouterStateUrl> {
     serialize(routerState: RouterStateSnapshot): RouterStateUrl {

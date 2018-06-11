@@ -10,6 +10,7 @@ import { FriendsRoutingModule } from './friends-routing.module';
 
 import { FriendsComponent } from './friends.component';
 import { FriendComponent } from './friend/friend.component';
+import { FriendsListComponent } from './friends-list/friends-list.component';
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import { FriendComponent } from './friend/friend.component';
     ],
     declarations: [
         FriendsComponent,
+        FriendsListComponent,
         FriendComponent
     ]
 })

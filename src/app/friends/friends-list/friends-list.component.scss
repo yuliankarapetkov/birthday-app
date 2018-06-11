@@ -1,0 +1,20 @@
+.friends-list {
+    max-width: 650px;
+    width: 100%;
+    margin: 40px auto 0;
+
+    .friend {
+        .mat-card {
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+
+        .mat-card-actions {
+            display: flex;
+        }
+
+        &__secondary-actions {
+            margin-left: auto;
+        }
+    }
+}

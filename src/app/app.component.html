@@ -5,7 +5,7 @@
         <mat-sidenav #sideNav mode="side">
             <app-side-nav
                 [user]="user$ | async"
-                [config]="sidenavConfig"
+                [config]="sidenavConfig$ | async"
                 (itemClicked)="onSidenavItemClicked($event)">
             </app-side-nav>
         </mat-sidenav>
