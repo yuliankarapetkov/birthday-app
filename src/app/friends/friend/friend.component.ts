@@ -4,7 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import * as fromStore from '../store';
+import { HeaderConfig } from '../../shared/models';
+
+import * as fromRootStore from '../../store';
+import * as fromBirthdayStore from '../store';
 
 @Component({
     selector: 'friends-friend',
@@ -15,6 +18,12 @@ export class FriendComponent implements OnInit, OnDestroy {
     private friendKey: string | null = null;
     private subscription: Subscription;
 
+    // This might be put in a base component class that all components in the module would inherit from.
+    // The config would be dispatched OnInit and would be overriden only when needed. 
+    private readonly headerConfig: HeaderConfig = {
+        showSearchInput: false
+    };
+
     friendForm = this.formBuilder.group({
         name: ['', [Validators.required]],
         birthday: ['', [Validators.required]]
@@ -23,7 +32,7 @@ export class FriendComponent implements OnInit, OnDestroy {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<fromStore.BirthdayState>
+        private store: Store<fromRootStore.State>
     ) { }
 
     async submitForm() {
@@ -31,15 +40,17 @@ export class FriendComponent implements OnInit, OnDestroy {
             if (this.friendExists) {
                 const { name, birthday } = this.friendForm.value;
                 const friend = { key: this.friendKey, name, birthday};
-                this.store.dispatch(new fromStore.UpdateFriend(friend));
+                this.store.dispatch(new fromBirthdayStore.UpdateFriend(friend));
             } else {
-                this.store.dispatch(new fromStore.CreateFriend(this.friendForm.value));
+                this.store.dispatch(new fromBirthdayStore.CreateFriend(this.friendForm.value));
             }
         }
     }
 
     ngOnInit() {
-        this.subscription = this.store.select(fromStore.getSelectedFriend)
+        this.store.dispatch(new fromRootStore.SetHeader(this.headerConfig));
+
+        this.subscription = this.store.select(fromBirthdayStore.getSelectedFriend)
             .subscribe(
                 (friend: any = null) => {
                     this.friendExists = !!(friend && friend.key);

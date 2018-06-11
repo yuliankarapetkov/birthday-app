@@ -9,10 +9,6 @@ import * as fromStore from '../store';
     styleUrls: ['./friends.component.scss']
 })
 export class FriendsComponent implements OnInit {
-    private readonly headerConfig: HeaderConfig = {
-        showSearchInput: true
-    };
-
     private readonly sidenavConfig: SidenavConfig = {
         sections: [{
             hasDivider: false,
@@ -45,6 +41,5 @@ export class FriendsComponent implements OnInit {
 
     ngOnInit() {
         this.store.dispatch(new fromStore.SetSidenav(this.sidenavConfig));
-        this.store.dispatch(new fromStore.SetHeader(this.headerConfig));
     }
 }

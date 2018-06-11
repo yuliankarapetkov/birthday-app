@@ -1,16 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, Subscription } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
+import { combineLatest, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
 
-import * as fromStore from './../store';
+import * as fromRootStore from '../../store';
+import * as fromBirthdayStore from '../store';
+
 import { RemoveFriendDialogComponent } from './../shared/components/remove-friend-dialog/remove-friend-dialog.component';
 import { Friend } from './../shared/models';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/internal/operators';
+
 import { SearchInputService } from '../../shared/services/search-input/search-input.service';
+import { HeaderConfig } from '../../shared/models';
 
 @Component({
     selector: 'friends-friends-list',
@@ -21,10 +24,16 @@ export class FriendsListComponent implements OnInit, OnDestroy {
     private dialogSubscription: Subscription;
     private filteredFriendsSubscription: Subscription;
 
+    // This might be put in a base component class that all components in the module would inherit from.
+    // The config would be dispatched OnInit and would be overriden only when needed.
+    private readonly headerConfig: HeaderConfig = {
+        showSearchInput: true
+    };
+
     filteredFriends: Friend[];
 
     constructor(
-        private store: Store<fromStore.BirthdayState>,
+        private store: Store<fromRootStore.State>,
         private removeDialog: MatDialog,
         private searchBarService: SearchInputService
     ) { }
@@ -39,15 +48,16 @@ export class FriendsListComponent implements OnInit, OnDestroy {
                 const remove = result;
                 if (remove) {
                     const { key } = friend;
-                    this.store.dispatch(new fromStore.RemoveFriend(key));
+                    this.store.dispatch(new fromBirthdayStore.RemoveFriend(key));
                 }
             });
     }
 
     ngOnInit() {
-        this.store.dispatch(new fromStore.LoadFriends());
+        this.store.dispatch(new fromBirthdayStore.LoadFriends());
+        this.store.dispatch(new fromRootStore.SetHeader(this.headerConfig));
 
-        const friends$ = this.store.select(fromStore.getDetailedFriends);
+        const friends$ = this.store.select(fromBirthdayStore.getDetailedFriends);
         const searchTerm$ = this.searchBarService.inputValueChanged
             .pipe(
                 debounceTime(500),
