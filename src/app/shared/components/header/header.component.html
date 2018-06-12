@@ -1,18 +1,33 @@
 <div class="header">
     <mat-toolbar color="primary">
-        <button mat-button (click)="toggleSideNav()">
-            <mat-icon>menu</mat-icon>
-        </button>
 
-        Birthday App
+        <div class="header__content">
 
-        <div *ngIf="config?.showSearchInput" class="search-input">
-            <button mat-icon-button>
-                <mat-icon>search</mat-icon>
-            </button>
-            <mat-form-field>
-                <input type="text" matInput [formControl]="searchInput">
-            </mat-form-field>
+            <div class="header__left">
+                <button mat-button (click)="toggleSideNav()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div>
+                    Birthday App
+                </div>
+            </div>
+
+            <div class="header__center">
+                <div *ngIf="config?.showSearchInput" class="search-input">
+                    <button mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                    </button>
+                    <mat-form-field>
+                        <input type="text" matInput [formControl]="searchInput">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="header__right">
+
+            </div>
+
         </div>
+
     </mat-toolbar>
 </div>

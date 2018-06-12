@@ -19,7 +19,7 @@ export class FriendComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
 
     // This might be put in a base component class that all components in the module would inherit from.
-    // The config would be dispatched OnInit and would be overriden only when needed. 
+    // The config would be dispatched OnInit and would be overriden only when needed.
     private readonly headerConfig: HeaderConfig = {
         showSearchInput: false
     };

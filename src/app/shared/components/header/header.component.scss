@@ -1,0 +1,26 @@
+.header {
+
+    &__content {
+        width: 100%;
+        display: flex;
+    }
+
+    &__left,
+    &__center,
+    &__right {
+        width: 33%;
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-input {
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        .mat-form-field {
+            width: 100%;
+        }
+    }
+}
