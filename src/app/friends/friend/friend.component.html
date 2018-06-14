@@ -24,13 +24,6 @@
                             formControlName="name"
                             placeholder="Your friend's name">
 
-                        <!--<mat-error *ngIf="emailFormatError">-->
-                            <!--Enter a valid email address, e.g. johndoe@example.com-->
-                        <!--</mat-error>-->
-                        <!--<mat-error *ngIf="emailRequiredError">-->
-                            <!--Enter an email-->
-                        <!--</mat-error>-->
-
                     </mat-form-field>
 
                     <mat-form-field>
@@ -38,6 +31,10 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
+
+                    <mat-error *ngIf="(error$ | async)?.type === FriendsError.CreateFriend || (error$ | async)?.type === FriendsError.UpdateFriend">
+                        {{ (error$ | async).content }}
+                    </mat-error>
 
                 </mat-card-content>
 

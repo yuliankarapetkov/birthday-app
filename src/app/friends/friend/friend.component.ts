@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { HeaderConfig } from '../../shared/models';
+import { ErrorWrapper, HeaderConfig } from '../../shared/models';
 
 import * as fromRootStore from '../../store';
 import * as fromBirthdayStore from '../store';
+import * as fromEnums from '../shared/enums';
 
 @Component({
     selector: 'friends-friend',
@@ -30,12 +31,15 @@ export class FriendComponent implements OnInit, OnDestroy {
     });
     friendExists = false;
 
+    error$: Observable<ErrorWrapper>;
+    FriendsError = fromEnums.FriendsError;
+
     constructor(
         private formBuilder: FormBuilder,
         private store: Store<fromRootStore.State>
     ) { }
 
-    async submitForm() {
+    submitForm() {
         if (this.friendForm.valid) {
             if (this.friendExists) {
                 const { name, birthday } = this.friendForm.value;
@@ -49,6 +53,7 @@ export class FriendComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.store.dispatch(new fromRootStore.SetHeader(this.headerConfig));
+        this.error$ = this.store.select(fromBirthdayStore.getError);
 
         this.subscription = this.store.select(fromBirthdayStore.getSelectedFriend)
             .subscribe(

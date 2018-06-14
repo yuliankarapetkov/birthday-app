@@ -15,8 +15,8 @@
             <button mat-raised-button color="primary">Sign in</button>
         </mat-card-actions>
 
-        <mat-error *ngIf="loginError">
-            {{ loginError }}
+        <mat-error *ngIf="(error$ | async)?.type === AuthError.LoginUser">
+            {{ (error$ | async).content }}
         </mat-error>
 
     </auth-form>

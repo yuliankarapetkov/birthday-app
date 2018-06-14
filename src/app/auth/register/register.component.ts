@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import * as fromStore from '../../store';
+import * as fromEnums from '../../shared/enums';
+
+import { ErrorWrapper } from '../../shared/models';
 
 @Component({
     selector: 'auth-register',
@@ -10,13 +14,15 @@ import * as fromStore from '../../store';
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-    registerError: string;
+    error$: Observable<ErrorWrapper>;
+    AuthError = fromEnums.AuthError;
 
     constructor(
         private store: Store<fromStore.State>
     ) { }
 
     ngOnInit() {
+        this.error$ = this.store.select(fromStore.getError);
     }
 
     private registerUser(email: string, password: string) {

@@ -7,6 +7,7 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import * as authAction from '../actions/auth.action';
 import * as fromServices from '../../shared/services';
 import * as fromRouter from '../actions/router.action';
+import * as fromEnums from '../../shared/enums';
 
 @Injectable()
 export class AuthEffect {
@@ -24,12 +25,8 @@ export class AuthEffect {
                 return this.authService
                     .createUser(emailAndPassword.email, emailAndPassword.password)
                     .pipe(
-                        map((res: any) => {
-                            const { uid, email } = res;
-                            return new authAction.GetUser();
-                            // return new authAction.CreateUserSuccess({ uid, email });
-                        }) ,
-                        catchError(error => of(new authAction.CreateUserFail(error)))
+                        map(() => new authAction.GetUser()),
+                        catchError(error => of(new authAction.SetError({ type: fromEnums.AuthError.CreateUser, content: error })))
                     );
             })
         );
@@ -43,12 +40,8 @@ export class AuthEffect {
                 return this.authService
                     .loginUser(emailAndPassword.email, emailAndPassword.password)
                     .pipe(
-                        map((res: any) => {
-                            const { uid, email } = res;
-                            return new authAction.GetUser();
-                            // return new authAction.LoginUserSuccess({ uid, email });
-                        }) ,
-                        catchError(error => of(new authAction.LoginUserFail(error)))
+                        map(() => new authAction.GetUser()) ,
+                        catchError(error => of(new authAction.SetError({ type: fromEnums.AuthError.LoginUser, content: error })))
                     );
             })
         );
@@ -62,7 +55,7 @@ export class AuthEffect {
                     .logoutUser()
                     .pipe(
                         map(() => new authAction.GetUser()),
-                        catchError(error => of(new authAction.LoginUserFail(error)))
+                        catchError(error => of(new authAction.SetError({ type: fromEnums.AuthError.LogoutUser, content: error })))
                     );
             })
         );
@@ -86,10 +79,21 @@ export class AuthEffect {
                                 return new authAction.SetNotLoggedIn();
                             }
                         }) ,
-                        catchError(error => {
-                            return of(new authAction.GetUserFail(error));
-                        })
+                        catchError(error => of(new authAction.SetError({ type: fromEnums.AuthError.GetUser, content: error })))
                     );
+            })
+        );
+
+    @Effect()
+    resetError$ = this.actions$
+        .ofType(
+            authAction.CREATE_USER,
+            authAction.LOGIN_USER,
+            authAction.LOGOUT_USER,
+            authAction.GET_USER)
+        .pipe(
+            switchMap(() => {
+                return of(new authAction.ResetError());
             })
         );
 

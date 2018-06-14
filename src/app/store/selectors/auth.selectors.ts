@@ -5,3 +5,4 @@ import * as fromAuth from '../reducers/auth.reducer';
 
 export const getUser = createSelector(fromRoot.getAuthState, fromAuth.getUser);
 export const getIsLoggedIn = createSelector(fromRoot.getAuthState, fromAuth.getIsLoggedIn);
+export const getError = createSelector(fromRoot.getAuthState, fromAuth.getError);

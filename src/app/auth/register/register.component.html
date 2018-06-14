@@ -15,8 +15,8 @@
             <button mat-raised-button color="primary">Create Account</button>
         </mat-card-actions>
 
-        <mat-error *ngIf="registerError">
-            {{ registerError }}
+        <mat-error *ngIf="(error$ | async)?.type === AuthError.CreateUser">
+            {{ (error$ | async).content }}
         </mat-error>
 
     </auth-form>
