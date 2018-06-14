@@ -14,6 +14,7 @@ export const getFriendsState = createSelector(
 export const getFriends = createSelector(getFriendsState, fromFriends.getFriends);
 export const getFriendsLoaded = createSelector(getFriendsState, fromFriends.getFriendsLoaded);
 export const getFriendsLoading = createSelector(getFriendsState, fromFriends.getFriendsLoading);
+export const getError = createSelector(getFriendsState, fromFriends.getError);
 
 export const getFormattedFriends = createSelector(
     getFriends,

@@ -8,7 +8,6 @@ import { tap, filter, take, switchMap, catchError } from 'rxjs/operators';
 import * as fromStore from '../../../store';
 import { FriendsSharedModule } from '../../shared.module';
 
-
 @Injectable({
     providedIn: FriendsSharedModule
 })

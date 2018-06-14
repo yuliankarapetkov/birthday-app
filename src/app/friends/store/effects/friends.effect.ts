@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import * as friendsAction from '../actions/friends.action';
 import * as fromServices from '../../shared/services';
 import * as fromRouter from '../../../store/actions/router.action';
+import * as fromEnums from '../../shared/enums';
+
 import { Friend } from '../../shared/models';
 
 @Injectable()
@@ -15,6 +17,19 @@ export class FriendsEffect {
         private actions$: Actions,
         private friendsService: fromServices.FriendsService
     ) {}
+
+    @Effect()
+    resetError$ = this.actions$
+        .ofType(
+            friendsAction.CREATE_FRIEND,
+            friendsAction.LOAD_FRIENDS,
+            friendsAction.UPDATE_FRIEND,
+            friendsAction.REMOVE_FRIEND)
+        .pipe(
+            switchMap(() => {
+                return of(new friendsAction.ResetError());
+            })
+        );
 
     @Effect()
     loadFriends$ = this.actions$
@@ -38,7 +53,8 @@ export class FriendsEffect {
                     .addFriend(friend)
                     .pipe(
                         map(() => new friendsAction.CreateFriendSuccess()),
-                        catchError(error => of(new friendsAction.CreateFriendFail(error)))
+                        catchError(error => of(new friendsAction.SetError(
+                            { type: fromEnums.FriendsError.CreateFriend, content: error } )))
                     );
             })
         );
@@ -65,7 +81,8 @@ export class FriendsEffect {
                     .updateFriend(key, friendToUpdate)
                     .pipe(
                         map(() => new friendsAction.UpdateFriendSuccess()),
-                        catchError(error => of(new friendsAction.UpdateFriendFail(error)))
+                        catchError(error => of(new friendsAction.SetError(
+                            { type: fromEnums.FriendsError.UpdateFriend, content: error } )))
                     );
             })
         );
@@ -90,8 +107,9 @@ export class FriendsEffect {
                 return this.friendsService
                     .removeFriend(key)
                     .pipe(
-                        map(() => new friendsAction.RemoveFriendSuccess()),
-                        catchError(error => of(new friendsAction.RemoveFriendFail(error)))
+                        // map(() => new friendsAction.RemoveFriendSuccess()),
+                        catchError(error => of(new friendsAction.SetError(
+                            { type: fromEnums.FriendsError.RemoveFriend, content: error } )))
                     );
             })
         );
