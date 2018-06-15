@@ -16,5 +16,15 @@
         &__secondary-actions {
             margin-left: auto;
         }
+
+        &__days-until {
+            display: flex;
+            align-items: center;
+            margin-top: 6px;
+
+            .mat-icon {
+                margin-right: 6px;
+            }
+        }
     }
 }
