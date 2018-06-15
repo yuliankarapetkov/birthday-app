@@ -13,7 +13,7 @@ export class SidenavComponent implements OnInit {
     @Output() itemClicked = new EventEmitter<SidenavItem>();
 
     // This might be declared in a constants file/folder.
-    readonly const githubUrl = 'https://github.com/yuliankarapetkov/birthday-app';
+    readonly githubUrl = 'https://github.com/yuliankarapetkov/birthday-app';
 
     constructor() { }
 
