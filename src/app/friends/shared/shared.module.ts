@@ -1,19 +1,25 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared.module';
-import { components } from './components';
 import { RemoveFriendDialogComponent } from './components/remove-friend-dialog/remove-friend-dialog.component';
+
+import { components } from './components';
+import { pipes } from './pipes';
+
+
 
 @NgModule({
     imports: [
         SharedModule
     ],
     declarations: [
-        ...components
+        ...components,
+        ...pipes
     ],
     exports: [
         SharedModule,
-        ...components
+        ...components,
+        ...pipes
     ],
     entryComponents: [
         RemoveFriendDialogComponent
