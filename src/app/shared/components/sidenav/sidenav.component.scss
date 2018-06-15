@@ -14,4 +14,18 @@
             text-align: left;
         }
     }
+
+    &__github {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+        margin-top: 24px;
+
+        .mat-icon {
+            margin-right: 6px;
+            height: 16px;
+            width: 16px;
+            font-size: 16px;
+        }
+    }
 }
