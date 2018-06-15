@@ -13,12 +13,13 @@
                 <mat-card-subtitle>
                     Turns {{ friend.turningAge }} on {{ friend.nextBirthday | date: 'dd MMMM y' }}
                     <br />
-                    <!--{{ friend.daysUntil }} days left-->
-                    {{ friend.daysUntil | daysUntil }}
+                    <div class="friend__days-until">
+                        <mat-icon [color]="friend.daysUntil === 0 ? 'accent' : ''">cake</mat-icon>
+                        {{ friend.daysUntil | daysUntil }}
+                    </div>
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-actions>
-                <!--<button mat-button color="primary">Congratulate!</button>-->
                 <div class="friend__secondary-actions">
                     <a
                         mat-icon-button
